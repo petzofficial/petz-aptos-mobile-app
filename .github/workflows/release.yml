@@ -1,0 +1,123 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  github-android:
+    name: GitHub
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set env
+        run: ./scripts/set-env.sh ${{ github.ref_name }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit
+
+      - name: Build APKs
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assembleRelease
+          build-root-directory: android
+
+      - name: Rename APKs
+        run: |
+          for f in android/app/build/outputs/apk/release/*.apk;
+          do
+            mv "$f" "$(echo "$f" | sed s/release-unsigned/release/)";
+          done
+
+      - name: Sign APKs
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: android/app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+          alias: ${{ secrets.ANDROID_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - name: GitHub Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: ${{ env.RELEASE_TRACK != 'production' }}
+          files: |
+            android/app/build/outputs/apk/release/*signed.apk
+
+  store-android:
+    name: Play Store
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set env
+        run: ./scripts/set-env.sh ${{ github.ref_name }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --no-audit
+
+      - name: Build AAB
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: bundleRelease
+          build-root-directory: android
+
+      - name: Sign AAB
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: android/app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.ANDROID_SIGNING_KEY }}
+          alias: ${{ secrets.ANDROID_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON_TEXT }}
+          packageName: money.petz.app
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
+          releaseName: ${{ env.RELEASE_VERSION }}
+          track: ${{ env.RELEASE_TRACK }}
+          status: completed
+          inAppUpdatePriority: 2
+          mappingFile: android/app/build/outputs/mapping/release/mapping.txt
+          debugSymbols: android/app/intermediates/merged_native_libs/release/out/lib

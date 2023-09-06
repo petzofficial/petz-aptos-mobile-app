@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PetZ Money</string>
+    <string name="app_name_debug">PetZ Money (Debug)</string>
+</resources>
