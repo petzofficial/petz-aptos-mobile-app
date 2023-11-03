@@ -16,7 +16,7 @@ const HeaderButton = ({ children, onPress }: HeaderButtonProps) => {
 const styles = StyleSheet.create({
   wrapper: {
     borderRadius: 12,
-    padding: 6,
+    // padding: 6,
   },
 });
 

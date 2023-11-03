@@ -9,6 +9,11 @@ import Switcher from '../components/Switcher';
 import NumberInput from '../components/NumberInput';
 import SettingsModule from '../native/SettingsModule';
 import { useTheme } from '../hooks/useTheme';
+import SettingBtn from '../components/SettingBtn';
+import { useNavigation } from '@react-navigation/native';
+
+
+
 
 type SettingsScreenProps = BottomTabScreenProps<TabParamList, 'Settings'>;
 
@@ -24,6 +29,8 @@ const SettingsScreen = (_props: SettingsScreenProps) => {
   const theme = useTheme();
 
   const [saving, setSaving] = useState(false);
+
+  const navigation = useNavigation<BottomTabScreenProps<TabParamList, 'Pomo'>>();
 
   const { control, setValue, handleSubmit } = useForm<SettingsFormData>({
     defaultValues: {
@@ -140,6 +147,11 @@ const SettingsScreen = (_props: SettingsScreenProps) => {
             },
           }}
         />
+
+        <SettingBtn icon1={require('../assets/icons/about.png')} txt ='About' icon2={require('../assets/icons/next.png')} />
+        <SettingBtn icon1={require('../assets/icons/about.png')} txt ='Terms & Conditions' icon2={require('../assets/icons/next.png')} onPress={() => navigation.navigate('ContinueWithoutNft')} />
+        <SettingBtn icon1={require('../assets/icons/about.png')} txt ='Privacy Policy' icon2={require('../assets/icons/next.png')} />
+        <SettingBtn icon1={require('../assets/icons/help.png')} txt ='Help & Support' icon2={require('../assets/icons/next.png')} />
 
         <Pressable
           style={({ pressed }) => [

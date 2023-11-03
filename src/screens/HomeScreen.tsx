@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View, Image } from 'react-native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-
+import React, { useState } from 'react';
 import PlayerActions from '../components/PlayerActions';
 import Countdown from '../components/Countdown';
 import PomoModule from '../native/PomoModule';
@@ -13,10 +13,11 @@ import { useNavigation } from '@react-navigation/native';
 import InfoIcon from '../assets/icons/info.svg';
 import Notifi from '../assets/icons/alert-triangle.svg';
 import * as Progress from 'react-native-progress';
+import Card from '../components/Card';
 
 type PomoScreenProps = BottomTabScreenProps<TabParamList, 'Pomo'>;
 
-const PomoScreen = (_props: PomoScreenProps) => {
+const HomeScreen = (_props: PomoScreenProps) => {
   const theme = useTheme();
   const orientation = useOrientation();
   // const navigation = useNavigation();
@@ -25,19 +26,44 @@ const PomoScreen = (_props: PomoScreenProps) => {
   const { running, time, percent, cycle, cycleCount, cycleDuration, state } =
     usePomoTimer();
 
+  const [activeCard, setActiveCard] = useState(1);
+
+  const handleCardPress = (cardIndex) => {
+    setActiveCard(cardIndex);
+  };
   return (
-    <ScrollView>
-      <HeaderButton onPress={() => navigation.navigate('About')}>
+    <View style={{flex:1}}>
+     <View style={{flex:1}}>
+     <HeaderButton onPress={() => navigation.navigate('About')}>
         <View style={styles.headerContainer}>
           <View style={styles.subContainer}>
-            <Notifi color={theme.colors.notification} width={24} height={24} />
-            <Text style={styles.TextColor}>PetZ Money</Text>
+            {/* <Notifi color={theme.colors.notification} width={24} height={24}  /> */}
+            <Text></Text>
+            <Text style={styles.TextColor}>Account</Text>
             <InfoIcon color={theme.colors.text} width={24} height={24} />
           </View>
           <View style={styles.flexView}>
-            <Notifi color={theme.colors.notification} width={24} height={24} />
             <View style={styles.boxWhite}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image
+                  source={require('../assets/icons/pgt-removebg-preview.png')}
+                  style={{ width: 24, height: 24, marginLeft: 4 }}
+                />
+
+                <Text
+                  style={[
+                    styles.TextColor,
+                    { color: 'orange', fontSize: 16, marginLeft: 4 },
+                  ]}>
+                  100 APT
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginLeft: 6,
+                }}>
                 <Image
                   source={require('../assets/icons/pst-removebg-preview.png')}
                   style={{ width: 24, height: 24 }}
@@ -46,7 +72,7 @@ const PomoScreen = (_props: PomoScreenProps) => {
                 <Text
                   style={[
                     styles.TextColor,
-                    { color: 'orange', fontSize: 16, marginLeft: 6 },
+                    { color: 'orange', fontSize: 16, marginLeft: 4 },
                   ]}>
                   100 APT
                 </Text>
@@ -63,23 +89,10 @@ const PomoScreen = (_props: PomoScreenProps) => {
                 />
 
                 <Text
-                  style={[styles.TextColor, { color: 'orange', fontSize: 16 }]}>
-                  100 APT
-                </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginLeft: 6,
-                }}>
-                <Image
-                  source={require('../assets/icons/pst-removebg-preview.png')}
-                  style={{ width: 24, height: 24 }}
-                />
-
-                <Text
-                  style={[styles.TextColor, { color: 'orange', fontSize: 16 }]}>
+                  style={[
+                    styles.TextColor,
+                    { color: 'orange', fontSize: 16, marginLeft: 4 },
+                  ]}>
                   100 APT
                 </Text>
               </View>
@@ -125,43 +138,72 @@ const PomoScreen = (_props: PomoScreenProps) => {
           </View>
         </View>
 
-        <View style={styles.boxView}>
-          <Text style={[styles.TextColor, { color: '#D3D3D3', fontSize: 16 }]}>
-            Choose Task
+        <View style={styles.cardContainer}>
+          <Text style={[styles.TextColor, { color: 'black', fontSize: 16 }]}>
+            PetZ Net CollEction
           </Text>
-        </View>
-
-        <View style={{ flex: 1, flexDirection: 'row' }}></View>
-      </HeaderButton>
-
-      {cycleDuration !== 0 && (
-        <View
-          style={[
-            styles.container,
-            orientation === Orientation.PORTRAIT
-              ? styles.containerPortrait
-              : styles.containerLandscape,
-          ]}>
-          <View style={styles.countdown}>
-            <Countdown time={time} percent={percent} state={state} />
-
-            <Text style={[{ color: theme.colors.text }, styles.cycleText]}>
-              {cycle}/{cycleCount}
-            </Text>
+          <View style={styles.boxView1}>
+            <Image
+              source={require('../assets/icons/cart.png')}
+              style={{ width: 24, height: 24 }}
+            />
           </View>
-
-          <PlayerActions
-            playing={running}
-            onPlay={() => PomoModule.play()}
-            onPause={() => PomoModule.pause()}
-            onStop={() => PomoModule.stop()}
-            onReset={() => PomoModule.reset()}
-          />
         </View>
-      )}
-    </ScrollView>
+
+      </HeaderButton>
+     </View>
+      
+        <ScrollView style={{flex:1}}>
+        <View style={styles.card}>
+          <Card
+            txt1="#1273"
+            txt2="Pitbull"
+            img={require('../assets/icons/2.png')}
+            isActive={activeCard === 0}
+            onPress={() => navigation.navigate('Tasks')}
+          />
+          <Card
+            txt1="#1273"
+            txt2="Pitbull"
+            img={require('../assets/icons/3.png')}
+            isActive={activeCard === 1}
+            onPress={() => handleCardPress(1)}
+          />
+          <Card
+            txt1="#1273"
+            txt2="Pitbull"
+            img={require('../assets/icons/2.png')}
+            isActive={activeCard === 2}
+            onPress={() => navigation.navigate('NftScreen')}
+          />
+          <Card
+            txt1="#1273"
+            txt2="Pitbull"
+            img={require('../assets/icons/3.png')}
+            isActive={activeCard === 3}
+            onPress={() => navigation.navigate('NftSelling')}
+          />
+          <Card
+            txt1="#1273"
+            txt2="Pitbull"
+            img={require('../assets/icons/3.png')}
+            isActive={activeCard === 3}
+            onPress={() => navigation.navigate('Feedback')}
+          />
+          <Card
+            txt1="#1273"
+            txt2="Pitbull"
+            img={require('../assets/icons/3.png')}
+            isActive={activeCard === 3}
+            onPress={() => navigation.navigate('HelpScreen')}
+          />
+          
+           </View>
+        </ScrollView>
+     
+    </View>
   );
-};
+};  
 
 const styles = StyleSheet.create({
   container: {
@@ -195,16 +237,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
+    paddingHorizontal: 30,
   },
   flexView: {
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 20,
     width: '100%',
+    justifyContent: 'center',
+    paddingHorizontal: 30,
   },
   headerContainer: {
     backgroundColor: '#F9692C',
-    paddingHorizontal: 30,
     height: 150,
     paddingVertical: 30,
   },
@@ -212,9 +256,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: 35,
     flexDirection: 'row',
-    paddingHorizontal: 5,
+
     borderRadius: 10,
-    marginLeft: 20,
+
     width: '100%',
     paddingRight: 30,
     justifyContent: 'space-around',
@@ -233,6 +277,30 @@ const styles = StyleSheet.create({
     margin: 20,
     borderRadius: 10,
   },
+  boxView1: {
+    borderColor: '#D3D3D3',
+    borderWidth: 1,
+    //  height:100,
+    width: 110,
+    height: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  card: {
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 30,
+    flexWrap: 'wrap',
+    paddingBottom: 20,
+  },
 });
 
-export default PomoScreen;
+export default HomeScreen;

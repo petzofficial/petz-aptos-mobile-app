@@ -9,6 +9,7 @@ import SettingsIcon from '../assets/icons/settings.svg';
 import PomoScreen from './PomoScreen';
 import SettingsScreen from './SettingsScreen';
 import StatScreen from './StatScreen';
+import HomeScreen from './HomeScreen';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -16,8 +17,10 @@ const MainTabs = () => {
   const theme = useTheme();
 
   return (
+
+    
     <Tab.Navigator
-      initialRouteName="Pomo"
+      initialRouteName="Home"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: theme.colors.primary,
@@ -25,7 +28,18 @@ const MainTabs = () => {
           paddingBottom: 4,
         },
       }}>
+         <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <SettingsIcon color={color} width={size} height={size} />
+          ),
+        }}
+      />
       <Tab.Screen
+
         name="Pomo"
         component={PomoScreen}
         options={{
@@ -57,6 +71,7 @@ const MainTabs = () => {
           ),
         }}
       />
+      
     </Tab.Navigator>
   );
 };

@@ -11,6 +11,8 @@ const LightScheme = {
     primary: '#e11d48',
     primaryDarken: '#be123c',
     onPrimary: '#fff',
+    MainColor:"#FF975C",
+    textOff:'#D3D3D3'
   },
 };
 
@@ -23,6 +25,8 @@ const DarkScheme = {
     primary: '#9f1239',
     primaryDarken: '#881337',
     onPrimary: '#fff',
+    MainColor:"#FF975C",
+    textOff:'#D3D3D3'
   },
 };
 

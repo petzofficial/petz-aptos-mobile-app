@@ -5,7 +5,7 @@ import {
   View,
   useWindowDimensions,
   Text,
-  Image
+  Image,
 } from 'react-native';
 import { useCallback, useState } from 'react';
 import { format, parse } from 'date-fns';
@@ -22,7 +22,7 @@ import PeriodSelector from '../components/PeriodSelector';
 import StatSummaryCard from '../components/StatSummaryCard';
 import StatChart from '../components/StatChart';
 import StatModule from '../native/StatModule';
-
+import Button from '../components/Button';
 type StatScreenProps = BottomTabScreenProps<TabParamList, 'Stat'>;
 
 const STAT_ENTRY_FORMAT = 'yyyy-MM-dd';
@@ -60,7 +60,7 @@ const barWidth = {
   [Period.YEAR]: 24,
 };
 
-const StatScreen = (_props: StatScreenProps) => {
+const Tasks = (_props: StatScreenProps) => {
   const [selectedPeriod, setSelectedPeriod] = useState(Period.WEEK);
   const [statEntries, setStatEntries] = useState<StatEntry[]>([]);
   const [statData, setStatData] = useState<StatBarDataPoint[]>([]);
@@ -68,6 +68,26 @@ const StatScreen = (_props: StatScreenProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { width } = useWindowDimensions();
+  const [video, setVideo] = useState([
+    {
+      id: 1,
+      image: require('../assets/icons/Ellipse.png'),
+      text: 'Workout',
+      text1: '0 minutes',
+      test2: '0/1',
+      test3: '25 min',
+      img: require('../assets/icons/Vector.png'),
+    },
+    {
+        id: 2,
+        image: require('../assets/icons/Ellipse.png'),
+        text: 'Workout',
+        text1: '0 minutes',
+        test2: '0/1',
+        test3: '25 min',
+        img: require('../assets/icons/Vector.png'),
+      },
+  ]);
 
   const focusEffectCb = useCallback(() => {
     setIsLoading(true);
@@ -106,29 +126,65 @@ const StatScreen = (_props: StatScreenProps) => {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.header}>
-          <View  style={styles.titleContainer}>
-        
-            <Text style={{flex:1, textAlign:'center',fontSize:18,fontWeight:'bold',color:'#FFFFFF'}} >Statistics</Text>
+          <View style={styles.titleContainer}>
+            <Text
+              style={{
+                flex: 1,
+                textAlign: 'center',
+                fontSize: 18,
+                fontWeight: 'bold',
+                color: '#FFFFFF',
+              }}>
+              Statistics
+            </Text>
             <View>
-            <Image source={require('../assets/icons/bell.png')} style={{width:27, height:27, marginRight:15}} />
-      
+              <Image
+                source={require('../assets/icons/bell.png')}
+                style={{ width: 27, height: 27, marginRight: 15 }}
+              />
             </View>
           </View>
-        <PeriodSelector
-          periods={[
-            { value: Period.WEEK, label: 'Week' },
-            { value: Period.MONTH, label: 'Month' },
-            { value: Period.YEAR, label: 'Year' },
-          ]}
-          selectedPeriod={selectedPeriod}
-          setSelectedPeriod={setSelectedPeriod}
-        />
-         
-
+          <PeriodSelector
+            periods={[
+              { value: Period.WEEK, label: 'All' },
+              { value: Period.MONTH, label: 'Complete' },
+              { value: Period.YEAR, label: 'Incomplete' },
+              { value: Period.YEAR, label: 'Pending' },
+            ]}
+            selectedPeriod={selectedPeriod}
+            setSelectedPeriod={setSelectedPeriod}
+          />
         </View>
-        
+        <View style={styles.subContent}>
+          <Text>Today</Text>
+          {video.map((e, index) => (
+            <View key={index}>
+                <View  style={styles.boxView}>
+              <View>
+                <Image  style={{width:30,height:30}}source={e.image}></Image>
+              </View>
+              <View>
+                <Text style={{color:'black'}}>{e.text}</Text>
+                <Text>{e.text1}</Text>
+              </View>
+              <View></View>
+              <View></View>
 
-        {!isLoading && (
+              <View>
+                <Text>{e.test2}</Text>
+                <Text>{e.test3}</Text>
+              </View>
+
+              <Image style={{width:30,height:30}}source={e.img}></Image>
+            </View>
+            </View>
+          ))}
+          <View style={{marginTop:300}}>
+          <Button btntext="+ Add New Task"/>
+          </View>
+        </View>
+
+        {/* {!isLoading && (
           <>
             <View style={styles.chartWrapper}>
               <StatChart
@@ -144,7 +200,8 @@ const StatScreen = (_props: StatScreenProps) => {
               <StatSummaryCard period={selectedPeriod} data={statEntries} />
             )}
           </>
-        )}
+        )} */}
+        
       </View>
     </ScrollView>
   );
@@ -159,17 +216,47 @@ const styles = StyleSheet.create({
   chartWrapper: {
     marginVertical: 32,
   },
-  header:{
-    backgroundColor:'#FF975C',
-    height:150,
-    justifyContent:'center',
-    paddingHorizontal:25
+  boxView:{
+   flexDirection:'row',
+   height:54,
+   shadowColor: "#000",
+   justifyContent:'space-between',
+   marginTop:30,
+   marginBottom:4,
+   alignItems:'center',
+   borderRadius:17,
+   paddingHorizontal:20,
+   backgroundColor:'white',
+   shadowColor: "#000",
+   shadowOffset: {
+       width: 0,
+       height: 9,
+   },
+   shadowOpacity: 0.48,
+   shadowRadius: 11.95,
+   
+   elevation: 2
   },
-  titleContainer:{
-    flexDirection:"row",
-    paddingBottom:15
-    
-  }
+
+  header: {
+    backgroundColor: '#FF975C',
+    height: 150,
+    justifyContent: 'center',
+    paddingHorizontal: 25,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    paddingBottom: 15,
+  },
+  subContent: {
+    marginTop: 10,
+    justifyContent: 'center',
+    paddingHorizontal: 25,
+    flex:1
+  },
+  contentStyling: {
+    flexDirection: 'row',
+  },
 });
 
-export default StatScreen;
+export default Tasks;
