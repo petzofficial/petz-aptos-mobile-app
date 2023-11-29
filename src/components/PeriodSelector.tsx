@@ -47,8 +47,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 4,
     borderWidth: 1,
-    backgroundColor:"#FFFFFF",
-
   },
 
   periodBtn: {

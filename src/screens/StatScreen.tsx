@@ -4,8 +4,6 @@ import {
   StyleSheet,
   View,
   useWindowDimensions,
-  Text,
-  Image
 } from 'react-native';
 import { useCallback, useState } from 'react';
 import { format, parse } from 'date-fns';
@@ -105,15 +103,6 @@ const StatScreen = (_props: StatScreenProps) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <View  style={styles.titleContainer}>
-        
-            <Text style={{flex:1, textAlign:'center',fontSize:18,fontWeight:'bold',color:'#FFFFFF'}} >Statistics</Text>
-            <View>
-            <Image source={require('../assets/icons/bell.png')} style={{width:27, height:27, marginRight:15}} />
-      
-            </View>
-          </View>
         <PeriodSelector
           periods={[
             { value: Period.WEEK, label: 'Week' },
@@ -123,10 +112,6 @@ const StatScreen = (_props: StatScreenProps) => {
           selectedPeriod={selectedPeriod}
           setSelectedPeriod={setSelectedPeriod}
         />
-         
-
-        </View>
-        
 
         {!isLoading && (
           <>
@@ -153,23 +138,12 @@ const StatScreen = (_props: StatScreenProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // margin: 16,
+    margin: 16,
   },
 
   chartWrapper: {
     marginVertical: 32,
   },
-  header:{
-    backgroundColor:'#FF975C',
-    height:150,
-    justifyContent:'center',
-    paddingHorizontal:25
-  },
-  titleContainer:{
-    flexDirection:"row",
-    paddingBottom:15
-    
-  }
 });
 
 export default StatScreen;

@@ -4,7 +4,6 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { StackParamList } from '../types/navigation';
 import { useTheme } from '../hooks/useTheme';
 
-
 type AboutScreenProps = NativeStackScreenProps<StackParamList, 'About'>;
 
 export default function AboutScreen(_props: AboutScreenProps) {
@@ -41,7 +40,6 @@ export default function AboutScreen(_props: AboutScreenProps) {
 
   return (
     <ScrollView>
-    
       <View style={styles.container}>
         <Text style={[{ color: theme.colors.text }, styles.title]}>
           What is the Pomodoro Technique?

@@ -7,16 +7,6 @@ import InfoIcon from '../assets/icons/info.svg';
 
 import AboutScreen from './AboutScreen';
 import MainTabs from './MainTabs';
-import { View,StyleSheet } from 'react-native';
-import EditTask from './EditTask';
-import NftScreen from './NftScreen';
-import NewTask from './NewTaskScreen';
-import NftSelling from './NftSellingScreen';
-import ContinueWithoutNft from './ContinueWithoutNft';
-import Tasks from './Tasks';
-import SplashScreen from './SplashScreen';
-import HelpScreen from './HelpScreen';
-import Feedback from './Feedback';
 
 const Stack = createNativeStackNavigator<StackParamList>();
 
@@ -25,66 +15,30 @@ const MainStack = () => {
 
   return (
     <Stack.Navigator
-    screenOptions={{
-     headerShown:false
-    }}>
-    <Stack.Screen
-      name="SplashScreen"
-      component={SplashScreen}
-    
-    />
-  <Stack.Screen
-      name="MainTabs"
-      component={MainTabs}
-    
-    />
-    <Stack.Screen
-      name="About"
-      component={AboutScreen}
-      options={{ title: 'About' }}
-    />
-    <Stack.Screen
-      name="EditTask"
-      component={EditTask}
-    
-    />
-     <Stack.Screen
-      name="NftScreen"
-      component={NftScreen}
-    
-    />
+      screenOptions={{
+        headerTitleAlign: 'center',
+      }}>
       <Stack.Screen
-      name="NewTask"
-      component={NewTask}
-    
-    />
-    <Stack.Screen
-      name="NftSelling"
-      component={NftSelling}
-    
-    />
-     <Stack.Screen
-      name="ContinueWithoutNft"
-      component={ContinueWithoutNft}
-    
-    />
-     <Stack.Screen
-      name="Tasks"
-      component={Tasks}
-    
-    />
-     <Stack.Screen
-      name="HelpScreen"
-      component={HelpScreen}
-    
-    />
-         <Stack.Screen
-      name="Feedback"
-      component={Feedback}
-    
-    />
-     
-  </Stack.Navigator>
+        name="Main"
+        component={MainTabs}
+        options={({ navigation }) => ({
+          title: 'PetZ Money',
+          headerRight: () => {
+            return (
+              <HeaderButton onPress={() => navigation.navigate('About')}>
+                <InfoIcon color={theme.colors.text} width={24} height={24} />
+              </HeaderButton>
+            );
+          },
+        })}
+      />
+
+      <Stack.Screen
+        name="About"
+        component={AboutScreen}
+        options={{ title: 'About' }}
+      />
+    </Stack.Navigator>
   );
 };
 
