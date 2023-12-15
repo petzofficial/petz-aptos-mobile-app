@@ -11,6 +11,7 @@ const LightScheme = {
     primary: '#e11d48',
     primaryDarken: '#be123c',
     onPrimary: '#fff',
+    headingText: '#2c3e50', // Add your desired color for headingText
   },
 };
 
@@ -23,6 +24,7 @@ const DarkScheme = {
     primary: '#9f1239',
     primaryDarken: '#881337',
     onPrimary: '#fff',
+    headingText: '#2c3e50', // Add your desired color for headingText
   },
 };
 

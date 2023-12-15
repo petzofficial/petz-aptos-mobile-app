@@ -49,13 +49,13 @@ const StatSummaryCard = ({ period, data }: StatSummaryCardProps) => {
     <View
       style={[
         {
-          backgroundColor: theme.colors.background,
-          borderColor: theme.colors.surface,
+          backgroundColor: '#ffffff',
+          borderColor: '#d1d8dd',
         },
         styles.card,
       ]}>
       <View
-        style={[{ borderBottomColor: theme.colors.surface }, styles.header]}>
+        style={[{ borderBottomColor: theme.colors.surface, }, styles.header]}>
         <VisibilityIcon color={theme.colors.text} width={24} height={24} />
 
         <Text style={[{ color: theme.colors.text }, styles.headerTitle]}>
@@ -85,7 +85,7 @@ const StatSummaryCard = ({ period, data }: StatSummaryCardProps) => {
 const styles = StyleSheet.create({
   card: {
     padding: 16,
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 12,
   },
 

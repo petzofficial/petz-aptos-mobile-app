@@ -15,14 +15,15 @@ const PeriodSelector = <T extends string>({
 
   return (
     <View
-      style={[styles.selectorWrapper, { borderColor: theme.colors.surface }]}>
+      style={[styles.selectorWrapper, { borderRadius: 12, borderColor: theme.colors.surface, backgroundColor: '#ffffff' }]}>
       {periods.map((period) => (
         <Pressable
           key={period.value}
           style={[
             styles.periodBtn,
             period.value === selectedPeriod && {
-              backgroundColor: theme.colors.primary,
+              backgroundColor: '#ff6900',
+              borderRadius: 12,
             },
           ]}
           onPress={() => setSelectedPeriod(period.value)}>

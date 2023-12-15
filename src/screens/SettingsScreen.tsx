@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, ScrollView, Pressable, Text, View } from 'react-native';
+import { StyleSheet, ScrollView, Pressable, Text, View, Image, StatusBar, TouchableOpacity, } from 'react-native';
 import { useForm } from 'react-hook-form';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import type { TabParamList } from '../types/navigation';
@@ -22,8 +22,33 @@ type SettingsFormData = {
 
 const SettingsScreen = (_props: SettingsScreenProps) => {
   const theme = useTheme();
+  const navigation = useNavigation();
 
   const [saving, setSaving] = useState(false);
+  const onAboutPress = () => {
+    // Navigate to the "About" screen
+    navigation.navigate('About');
+  };
+
+  const onTermsAndConditionsPress = () => {
+    // Navigate to the "TermsAndConditions" screen
+    navigation.navigate('TermsAndConditions');
+  };
+
+  const onHelpAndSupportPress = () => {
+    
+    navigation.navigate('HelpAndSupport');
+  };
+
+  const onPrivacyPolicyPress = () => {
+   
+    navigation.navigate('PrivacyPolicy');
+  };
+
+  const onChangeAccountPress = () => {
+    
+    navigation.navigate('ChangeAccount');
+  };
 
   const { control, setValue, handleSubmit } = useForm<SettingsFormData>({
     defaultValues: {
@@ -60,7 +85,8 @@ const SettingsScreen = (_props: SettingsScreenProps) => {
   useFocusEffect(focusEffectCb);
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: '#ffffff' }}>
+      <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
       <View style={styles.container}>
         <Switcher
           control={control}
@@ -141,6 +167,71 @@ const SettingsScreen = (_props: SettingsScreenProps) => {
           }}
         />
 
+        <TouchableOpacity style={styles.networkFeeContainer}
+          onPress={() => navigation.navigate('About')}>
+            <View style={styles.iconContainer}>
+              <Image source={require('../assets/images/about.png')} style={styles.icon} />
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.networkFeeText}>About</Text>
+            </View>
+            <View style={styles.amountContainer}>
+              <Image source={require('../assets/images/arrow.png')} style={[styles.icon, {tintColor: 'black'}]} />
+            </View>
+          </TouchableOpacity>
+
+        <TouchableOpacity style={styles.networkFeeContainer}
+          onPress={() => navigation.navigate('TermsAndConditions')}>
+            <View style={styles.iconContainer}>
+              <Image source={require('../assets/images/terms.png')} style={styles.icon} />
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.networkFeeText}>Terms & Conditions</Text>
+            </View>
+            <View style={styles.amountContainer}>
+              <Image source={require('../assets/images/arrow.png')} style={[styles.icon, {tintColor: 'black'}]} />
+            </View>
+          </TouchableOpacity>
+        
+        <TouchableOpacity style={styles.networkFeeContainer}
+          onPress={() => navigation.navigate('PrivacyPolicy')}>
+            <View style={styles.iconContainer}>
+              <Image source={require('../assets/images/privacy.png')} style={styles.icon} />
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.networkFeeText}>Privacy Policy</Text>
+            </View>
+            <View style={styles.amountContainer}>
+              <Image source={require('../assets/images/arrow.png')} style={[styles.icon, {tintColor: 'black'}]} />
+            </View>
+          </TouchableOpacity>
+
+        <TouchableOpacity style={styles.networkFeeContainer}
+          onPress={() => navigation.navigate('HelpAndSupport')}>
+            <View style={styles.iconContainer}>
+              <Image source={require('../assets/images/help.png')} style={styles.icon} />
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.networkFeeText}>Help & Support</Text>
+            </View>
+            <View style={styles.amountContainer}>
+              <Image source={require('../assets/images/arrow.png')} style={[styles.icon, {tintColor: 'black'}]} />
+            </View>
+          </TouchableOpacity>
+
+        <TouchableOpacity style={styles.networkFeeContainer}
+          onPress={() => navigation.navigate('ChangeAccount')}>
+            <View style={styles.iconContainer}>
+              <Image source={require('../assets/images/changeaccount.png')} style={styles.icon} />
+            </View>
+            <View style={styles.infoContainer}>
+              <Text style={styles.networkFeeText}>Change Account</Text>
+            </View>
+            <View style={styles.amountContainer}>
+              <Image source={require('../assets/images/arrow.png')} style={[styles.icon, {tintColor: 'black'}]} />
+            </View>
+          </TouchableOpacity>
+
         <Pressable
           style={({ pressed }) => [
             {
@@ -169,17 +260,64 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     marginHorizontal: 20,
   },
-
+  about: {
+    marginTop: 16,
+    marginLeft: 8,
+    borderRadius: 8,
+    height: 48,
+    justifyContent: 'flex-start', // Align items to the left
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 24, // Adjust the width and height based on your icon's size
+    height: 24,
+  },
   save: {
     marginTop: 32,
     borderRadius: 8,
     height: 48,
     justifyContent: 'center',
+    backgroundColor: '#ff4500', // Change this to your desired color
   },
-
   saveText: {
     textAlign: 'center',
     fontSize: 18,
+  },
+  iconcontainer:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 40,
+    width: 100,
+    borderWidth: 2,
+    borderRadius: 12,
+    borderColor: '#ff6500'
+  },
+  networkFeeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 50,
+    width: '100%',
+    marginTop: 20,
+    padding: 10,
+  },
+  iconContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  infoContainer: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  amountContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  networkFeeText: {
+    fontSize: 16,
+    fontWeight: '400',
+    color: 'black',
   },
 });
 

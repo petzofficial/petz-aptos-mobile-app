@@ -29,8 +29,8 @@ const PlayerActions = ({
         style={({ pressed }) => [
           {
             backgroundColor: pressed
-              ? theme.colors.primaryDarken
-              : theme.colors.primary,
+              ? '#ff6347'
+              : '#ff6900',
           },
           styles.sideButton,
         ]}
@@ -42,16 +42,16 @@ const PlayerActions = ({
         style={({ pressed }) => [
           {
             backgroundColor: pressed
-              ? theme.colors.primaryDarken
-              : theme.colors.primary,
+              ? '#ff6347'
+              : '#ff6900',
           },
           styles.centerButton,
         ]}
         onPress={playing ? onPause : onPlay}>
         {playing ? (
-          <PauseIcon color={theme.colors.onPrimary} width={64} height={64} />
+          <PauseIcon color={theme.colors.onPrimary} width={54} height={54} />
         ) : (
-          <PlayIcon color={theme.colors.onPrimary} width={64} height={64} />
+          <PlayIcon color={theme.colors.onPrimary} width={54} height={54} />
         )}
       </Pressable>
 
@@ -59,8 +59,8 @@ const PlayerActions = ({
         style={({ pressed }) => [
           {
             backgroundColor: pressed
-              ? theme.colors.primaryDarken
-              : theme.colors.primary,
+              ? '#ff6347'
+              : '#ff6900',
           },
           styles.sideButton,
         ]}

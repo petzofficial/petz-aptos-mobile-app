@@ -52,18 +52,24 @@ const ProgressCircle = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
+  const isCompleted = value === 100; // Assuming 100 is the maximum value for completion
+
+const dynamicColor = isCompleted ? '#ff6900' : '#f26400';
+
   return (
     <Svg
-      style={StyleSheet.absoluteFill}
-      width={width}
-      height={height}
-      viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}>
-      <G
-        rotation="-90"
-        origin={`${halfCircle}, ${halfCircle}`}
-        fill="transparent"
-        stroke={color}
-        strokeWidth={strokeWidth}>
+    style={StyleSheet.absoluteFill}
+    width={width}
+    height={height}
+    viewBox={`0 0 ${halfCircle * 2} ${halfCircle * 2}`}
+  >
+    <G
+      rotation="-90"
+      origin={`${halfCircle}, ${halfCircle}`}
+      fill="transparent"
+      stroke={dynamicColor} // Set the stroke color dynamically
+      strokeWidth={strokeWidth}
+    >
         <Circle
           cx="50%"
           cy="50%"

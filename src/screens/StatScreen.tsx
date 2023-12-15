@@ -4,6 +4,8 @@ import {
   StyleSheet,
   View,
   useWindowDimensions,
+  StatusBar,
+  Image
 } from 'react-native';
 import { useCallback, useState } from 'react';
 import { format, parse } from 'date-fns';
@@ -101,9 +103,12 @@ const StatScreen = (_props: StatScreenProps) => {
   useFocusEffect(focusEffectCb);
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <PeriodSelector
+    <View style={{ flex: 1 }}>
+      <StatusBar backgroundColor="#ff6900" barStyle="light-content" />
+
+      {/* Header Section */}
+      <View style={styles.header}>
+        <PeriodSelector 
           periods={[
             { value: Period.WEEK, label: 'Week' },
             { value: Period.MONTH, label: 'Month' },
@@ -112,6 +117,12 @@ const StatScreen = (_props: StatScreenProps) => {
           selectedPeriod={selectedPeriod}
           setSelectedPeriod={setSelectedPeriod}
         />
+        </View>
+    <ScrollView
+      style={{ backgroundColor: '#ffffff', paddingHorizontal: 0 }}
+    >
+      <View style={styles.container}>
+        
 
         {!isLoading && (
           <>
@@ -132,6 +143,7 @@ const StatScreen = (_props: StatScreenProps) => {
         )}
       </View>
     </ScrollView>
+    </View>
   );
 };
 
@@ -142,7 +154,18 @@ const styles = StyleSheet.create({
   },
 
   chartWrapper: {
-    marginVertical: 32,
+    marginVertical: 30,
+    borderColor: '#d1d8dd',
+    borderWidth: 1,
+    borderRadius: 8,
+  },
+
+  header: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#ff6900',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
