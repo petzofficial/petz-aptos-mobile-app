@@ -126,7 +126,7 @@ const NFTselect = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     marginVertical: 20,
-    padding: 10,
+    padding: 20,
     flex: 1,
   },
  
@@ -191,8 +191,8 @@ const styles = StyleSheet.create({
   c1: {
     alignItems: 'center',
     justifyContent: 'flex-start',
-    height: 210,
-    width: 160,
+    height: 200,
+    width: 150,
     borderWidth: 1,
     borderRadius: 12,
     backgroundColor: '#ffffff',
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   c2: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
     height: 160,
     width: 130,
     borderWidth: 1,
