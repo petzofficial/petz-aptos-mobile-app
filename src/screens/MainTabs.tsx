@@ -35,6 +35,14 @@ const MainTabs = () => {
           backgroundColor: '#ffffff',
           paddingBottom: 4,
         },
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.navigate('SettingScreen')}>
+            <Image
+              source={require('../assets/images/setting.png')}
+              style={{ width: 24, height: 24, tintColor: '#fff', marginLeft: 20 }}
+            />
+          </TouchableOpacity>
+        ),
         
         headerRight: () => {
           return (
@@ -61,14 +69,7 @@ const MainTabs = () => {
   options={({ route, navigation }) => ({  // Include navigation in the options
     headerTitle: 'PetZ Money',
     tabBarLabel: 'Home',
-    headerLeft: () => (
-      <TouchableOpacity onPress={() => navigation.navigate('SettingScreen')}>
-        <Image
-          source={require('../assets/images/setting.png')}
-          style={{ width: 24, height: 24, tintColor: '#fff', marginLeft: 20 }}
-        />
-      </TouchableOpacity>
-    ),
+    
     tabBarIcon: ({ color, size }) => (
       <Image
         source={require('../assets/images/home.png')}
