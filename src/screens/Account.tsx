@@ -1,13 +1,20 @@
 // Account.tsx
 import React, { useState } from 'react';
 import * as Progress from 'react-native-progress';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import { View, Text, TouchableOpacity, StyleSheet, Image, StatusBar, ScrollView, } from 'react-native';
 
 const Account = () => {
+  const [address, setAddress] = useState('0x9f18a7c9285168ccAF0F162c9aC5D7044710fa6');
   const [selectedCard, setSelectedCard] = useState(null);
   const navigation = useNavigation();
   const [selectedSection, setSelectedSection] = useState('name');
+
+  const handleCopyAddress = async () => {
+    await Clipboard.setString(address);
+    // You can optionally show a toast or feedback that the address has been copied
+  };
 
   const handleCardPress = (cardId) => {
     navigation.navigate('NTF');
@@ -17,6 +24,12 @@ const Account = () => {
   const handleSectionPress = (section: string) => {
     setSelectedSection(section);
   };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setSelectedCard(null);
+    }, [])
+  );
 
   const Levelprogress = 0.6; // Set the progress to 60%
   const Levelpercentage = Math.round(Levelprogress * 100);
@@ -59,6 +72,15 @@ const Energypercentage = Math.round(Energyprogress * 100);
     </View>
       <StatusBar backgroundColor="#ff6900" barStyle="light-content" />
 <ScrollView>
+
+<View style={styles.addressContainer}>
+          <Text style={styles.addressText}>{address}</Text>
+          <TouchableOpacity onPress={handleCopyAddress}>
+            <Image source={require('../assets/images/copy.png')} style={styles.copyIcon} />
+          </TouchableOpacity>
+        </View>
+
+
       <View style={styles.progressBarContainer}>
       <View style={styles.progressAndTextContainer}>
     <Text style={[styles.statusText, {color: '#ff6900'}]}>Level</Text>
@@ -461,6 +483,22 @@ const styles = StyleSheet.create({
   detailText: {
     fontSize: 16,
     textAlign: 'left',
+  },
+  addressContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: '06%',
+    paddingTop: 20,
+  },
+  addressText: {
+    fontSize: 13,
+    fontWeight: '500',
+    color: 'black',
+  },
+  copyIcon: {
+    height: 16,
+    width: 14,
   },
 });
 
