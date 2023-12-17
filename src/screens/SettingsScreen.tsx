@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { StyleSheet, ScrollView, Pressable, Text, View, Image, StatusBar, TouchableOpacity, } from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Image, StatusBar, TouchableOpacity, } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
@@ -20,35 +20,17 @@ type SettingsFormData = {
   cycleCount: number;
 };
 
+
 const SettingsScreen = (_props: SettingsScreenProps) => {
   const theme = useTheme();
   const navigation = useNavigation();
 
   const [saving, setSaving] = useState(false);
-  const onAboutPress = () => {
-    // Navigate to the "About" screen
-    navigation.navigate('About');
-  };
 
-  const onTermsAndConditionsPress = () => {
-    // Navigate to the "TermsAndConditions" screen
-    navigation.navigate('TermsAndConditions');
+  const handleSaveTask = () => {
+    navigation.navigate('Main');
   };
-
-  const onHelpAndSupportPress = () => {
-    
-    navigation.navigate('HelpAndSupport');
-  };
-
-  const onPrivacyPolicyPress = () => {
-   
-    navigation.navigate('PrivacyPolicy');
-  };
-
-  const onChangeAccountPress = () => {
-    
-    navigation.navigate('ChangeAccount');
-  };
+  
 
   const { control, setValue, handleSubmit } = useForm<SettingsFormData>({
     defaultValues: {
@@ -232,21 +214,12 @@ const SettingsScreen = (_props: SettingsScreenProps) => {
             </View>
           </TouchableOpacity>
 
-        <Pressable
-          style={({ pressed }) => [
-            {
-              backgroundColor: pressed
-                ? theme.colors.primaryDarken
-                : theme.colors.primary,
-            },
-            styles.save,
-          ]}
-          disabled={saving}
-          onPress={handleSubmit(onSave)}>
-          <Text style={[{ color: theme.colors.onPrimary }, styles.saveText]}>
-            Save changes
-          </Text>
-        </Pressable>
+          <TouchableOpacity
+        style={styles.saveButton}
+        onPress={handleSaveTask}
+      >
+        <Text style={styles.saveButtonText}>Save Changes</Text>
+      </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -280,10 +253,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#ff4500', // Change this to your desired color
   },
-  saveText: {
-    textAlign: 'center',
-    fontSize: 18,
-  },
+ 
   iconcontainer:{
     alignItems: 'center',
     justifyContent: 'center',
@@ -318,6 +288,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     color: 'black',
+  },
+  saveButton: {
+    backgroundColor: '#ff6500',
+    padding: 20,
+    width: '100%',
+    alignItems: 'center',
+    borderRadius: 12,
+    marginVertical: 20,
+  },
+  saveButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
   },
 });
 
